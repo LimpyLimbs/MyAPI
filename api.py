@@ -1,8 +1,10 @@
 import uuid
+from uuid import UUID
 from datetime import datetime
 from app import app
 from starlette.responses import Response
 from starlette import status
+from fastapi import HTTPException
 from schemas import OrderItemSchema, CreateOrderSchema, GetOrderSchema
 
 ORDERS = []
@@ -22,3 +24,12 @@ def create_order(order_details: CreateOrderSchema):
     order['status'] = 'created'
     ORDERS.append(order)
     return order
+
+@app.get('/orders/{order_id}',
+         response_model=GetOrderSchema
+)
+def get_order(order_id: UUID):
+    for order in ORDERS:
+        if order['uuid'] == order_id:
+            return order
+    raise HTTPException(status_code=404, detail=f'Order {order_id} was not found')
