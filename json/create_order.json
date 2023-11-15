@@ -1,0 +1,28 @@
+{
+    "order": [
+      {
+        "item": "chips",
+        "quantity": 1
+      },
+      {
+        "item": {
+            "size": "large",
+            "liquid": "soda"
+        },
+        "quantity": 1
+      },
+      {
+        "item": {
+            "entree_type": "burito",
+            "meat": "chicken",
+            "toppings": [
+                "beans",
+                "rice",
+                "salsa",
+                "guacamole"
+            ]
+        },
+        "quantity": 1
+      }
+    ]
+}
