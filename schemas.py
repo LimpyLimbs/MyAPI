@@ -1,4 +1,5 @@
 from enum import Enum
+from datetime import datetime
 from typing import Optional, Union, List
 from uuid import UUID
 from pydantic import BaseModel, conint, conset # , Field, conlist, 
@@ -45,6 +46,13 @@ class Appetizer(Enum):
     guacamole = 'guacamole'
     
 # order definitions
+
+class Status(Enum):
+    created = 'created'
+    canceled = 'canceled'
+    in_progress = 'in_progress'
+    dispatched = 'dispatched'
+    delivered = 'delivered'
     
 class Entree(BaseModel):
     entree_type: EntreeType
@@ -61,3 +69,8 @@ class OrderItemSchema(BaseModel):
      
 class CreateOrderSchema(BaseModel):
     order: List[OrderItemSchema]
+    
+class GetOrderSchema(BaseModel):
+    uuid: UUID
+    status: Status
+    created: datetime
