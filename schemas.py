@@ -1,9 +1,23 @@
 from enum import Enum
 from typing import List, Optional
 from uuid import UUID
-from pydantic import BaseModel, Field, conint, conlist
+from pydantic import BaseModel, Field, conint, conlist, conset
 
-class Dish(Enum):
+# drink definitions
+
+class Liquid(Enum):
+    water = 'water'
+    juice = 'juice'
+    soda = 'soda'
+
+class Size(Enum):
+    small = 'small'
+    medium = 'medium'
+    large = 'large'
+    
+# entree definitions
+
+class EntreeType(Enum):
     burito = 'burito'
     burito_bowl = 'burrito_bowl'
     tacos = 'tacos'
@@ -22,8 +36,23 @@ class Toppings(Enum):
     corn = 'corn'
     guacamole = 'guacamole'
 
-class OrderItemSchema(BaseModel):
-    dish: Dish
+class Appetizer(Enum):
+    chips ='chips'
+    queso = 'queso'
+    salsa = 'salsa'
+    guacamole = 'guacamole'
+    
+class OrderEntreeSchema(BaseModel):
+    entree_type: EntreeType
     meat: Meat
-    toppings: Optional[Toppings]
-    # I think it needs to be toppings: List[Optional[Toppings]]
+    toppings: conset(Optional[Toppings])
+
+class OrderDrinkSchema(BaseModel):
+    size: Size
+    liquid: Liquid  
+    
+class OrderItemSchema(BaseModel):
+    entree: OrderEntreeSchema
+    drink: OrderDrinkSchema
+    appetizer: Appetizer
+    quantity: Optional[conint(ge=1, strict=True)] = 1

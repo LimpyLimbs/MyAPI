@@ -13,5 +13,5 @@ def get_orders():
 
 @app.post('/orders/', status_code=status.HTTP_201_CREATED)
 def create_order(order_details: OrderItemSchema):
-    # order = order_details.dict()
+    order = order_details.dict()
     return orders
