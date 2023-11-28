@@ -70,7 +70,7 @@ class OrderItemSchema(BaseModel):
 class CreateOrderSchema(BaseModel):
     order: List[OrderItemSchema]
     
-class GetOrderSchema(BaseModel):
+class GetOrderSchema(CreateOrderSchema):
     uuid: UUID
     status: Status
     created: datetime
